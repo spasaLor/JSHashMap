@@ -122,19 +122,24 @@ class HashMap{
         return pairs;
     }
 
-    checkOccupation(){
-        if(this.length() / this.size >=this.loadFactor){
-            let oldBuckets=this.buckets;
-            this.size=this.size*2;
+    checkOccupation() {
+        if (this.length() / this.size >= this.loadFactor) {
+            let oldBuckets = this.buckets;
+            this.size = this.size * 2;
             this.buckets = Array(this.size);
-            for(let i =0;i<this.buckets.length;i++){
-                this.buckets[i]=oldBuckets[i];
-                if (i>=oldBuckets.length){
-                    this.buckets[i]=new LinkedList();
+            for (let i = 0; i < this.buckets.length; i++) {
+                this.buckets[i] = new LinkedList();
+            }
+            for (let i = 0; i < oldBuckets.length; i++) {
+                let current = oldBuckets[i].head;
+                while (current !== null) {
+                    this.set(current.key, current.value);
+                    current = current.next;
                 }
             }
         }
     }
 }
+
 
 
